@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+<meta charset="UTF-8">
+<title>Contato - ONG Caminho Seguro</title>
+
+<link rel="stylesheet" href="/style.css">
+
+</head>
+
+<body>
+
+<header>
+
+<h1>ONG Caminho Seguro</h1>
+
+<p>Ajudando famílias e crianças a terem um lar seguro.</p>
+
+</header>
+
+<nav>
+
+<a href="index.html">Início</a>
+<a href="sobre.html">Sobre</a>
+<a href="doacoes.html">Doações</a>
+<a href="voluntario.html">Voluntário</a>
+<a href="contato.html">Contato</a>
+
+</nav>
+
+<div class="container">
+
+<h2>Contato</h2>
+
+<p>
+Entre em contato conosco:
+</p>
+
+<p>
+📧 Email: contato@ongcaminhoseguro.org  
+</p>
+
+<p>
+📞 Telefone: (11) 99999-9999  
+</p>
+
+<p>
+📍 Endereço: Rua da Esperança, 123 - São Paulo
+<br><br>
+
+<iframe
+src="https://www.google.com/maps?q=São%20Paulo&output=embed"
+width="100%"
+height="300"
+style="border:0; border-radius:10px;"
+allowfullscreen=""
+loading="lazy">
+</iframe>
+</p>
+
+<h2>Envie uma mensagem</h2>
+
+<!-- MENSAGEM DE SUCESSO -->
+
+<div id="mensagem-sucesso" style="
+display:none;
+background:#2ecc71;
+color:white;
+padding:12px;
+border-radius:6px;
+margin-bottom:15px;
+font-weight:bold;
+">
+✅ Mensagem enviada com sucesso!
+</div>
+
+<form method="POST" action="/enviar">
+
+<label>Nome:</label><br>
+<input type="text" name="nome" placeholder="Digite seu nome" required>
+
+<br><br>
+
+<label>Email:</label><br>
+<input type="email" name="email" placeholder="Digite seu email" required>
+
+<br><br>
+
+<label>Mensagem:</label><br>
+<textarea name="mensagem" rows="5" placeholder="Digite sua mensagem" required></textarea>
+
+<br><br>
+
+<button class="btn">
+Enviar
+</button>
+
+</form>
+
+</div>
+
+<!-- FOOTER -->
+
+<footer class="footer">
+
+<div class="footer-container">
+
+<div class="footer-box">
+
+<h3>ONG Caminho Seguro</h3>
+
+<p>
+Ajudando famílias e crianças
+a terem um futuro melhor.
+</p>
+
+</div>
+
+<div class="footer-box">
+
+<h3>Contato</h3>
+
+<p>📞 (11) 99999-9999</p>
+<p>📧 contato@ongcaminhoseguro.org</p>
+
+</div>
+
+<div class="footer-box">
+
+<h3>Endereço</h3>
+
+<p>
+Rua Exemplo, 123<br>
+São Paulo - SP
+</p>
+
+</div>
+
+</div>
+
+<p class="footer-copy">
+
+© 2026 ONG Caminho Seguro — Todos os direitos reservados
+
+</p>
+
+</footer>
+
+<!-- SCRIPT DA MENSAGEM -->
+
+<script>
+
+const urlParams = new URLSearchParams(window.location.search);
+
+if (urlParams.get('sucesso') === '1') {
+
+document.getElementById('mensagem-sucesso').style.display = 'block';
+
+// limpar formulário
+document.querySelector("form").reset();
+
+}
+
+</script>
+
+</body>
+
+</html>

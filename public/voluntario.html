@@ -1,0 +1,70 @@
+// ================= VER VOLUNTÁRIOS =================
+
+app.get('/admin-voluntarios', (req, res) => {
+
+if (!req.session.logado) {
+return res.redirect('/login');
+}
+
+db.all(`SELECT * FROM voluntarios ORDER BY id DESC`, [], (err, rows) => {
+
+if (err) {
+return res.send("Erro ao buscar voluntários");
+}
+
+let lista = "";
+
+rows.forEach(v => {
+
+lista += `
+<p>
+<b>${v.nome}</b><br>
+Email: ${v.email}<br>
+Telefone: ${v.telefone}<br>
+Mensagem: ${v.mensagem}<br>
+Data: ${v.data}
+</p>
+<hr>
+`;
+
+});
+
+res.send(`
+<h1>Voluntários cadastrados</h1>
+
+${lista}
+
+<br>
+
+<a href="/admin">Voltar</a>
+`);
+
+});
+
+}); // 🔴 FECHA O app.get corretamente
+
+// ================= ADMIN =================
+
+app.get('/admin', (req, res) => {
+
+if (!req.session.logado) {
+return res.redirect('/login');
+}
+
+res.send(`
+<h1>Painel Admin</h1>
+
+<br>
+
+<a href="/admin-voluntarios">
+Ver voluntários
+</a>
+
+<br><br>
+
+<a href="/logout">
+Sair
+</a>
+`);
+
+});
