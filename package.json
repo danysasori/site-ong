@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "postinstall": "npm rebuild sqlite3"
   },
   "keywords": [],
   "author": "",
@@ -13,7 +14,7 @@
   "dependencies": {
     "express": "^4.19.2",
     "express-session": "^1.18.0",
-    "sqlite3": "^5.1.6"
+    "sqlite3": "5.1.6"
   },
   "repository": {
     "type": "git",
