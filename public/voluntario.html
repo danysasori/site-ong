@@ -2,69 +2,156 @@
 
 app.get('/admin-voluntarios', (req, res) => {
 
-if (!req.session.logado) {
-return res.redirect('/login');
-}
+  if (!req.session.logado) {
+    return res.redirect('/login');
+  }
 
-db.all(`SELECT * FROM voluntarios ORDER BY id DESC`, [], (err, rows) => {
+  db.all(`SELECT * FROM voluntarios ORDER BY id DESC`, [], (err, rows) => {
 
-if (err) {
-return res.send("Erro ao buscar voluntários");
-}
+    if (err) {
+      return res.send("Erro ao buscar voluntários");
+    }
 
-let lista = "";
+    let lista = "";
 
-rows.forEach(v => {
+    rows.forEach(v => {
 
-lista += `
-<p>
-<b>${v.nome}</b><br>
-Email: ${v.email}<br>
-Telefone: ${v.telefone}<br>
-Mensagem: ${v.mensagem}<br>
-Data: ${v.data}
-</p>
-<hr>
-`;
+      lista += `
+      <div class="card">
+
+        <h2>${v.nome}</h2>
+
+        <p><b>Email:</b> ${v.email}</p>
+
+        <p><b>Telefone:</b> ${v.telefone}</p>
+
+        <p><b>Mensagem:</b> ${v.mensagem}</p>
+
+        <p><b>Data:</b> ${v.data}</p>
+
+      </div>
+      `;
+
+    });
+
+    res.send(`
+
+    <!DOCTYPE html>
+
+    <html lang="pt-br">
+
+    <head>
+
+      <meta charset="UTF-8">
+
+      <title>Voluntários</title>
+
+      <style>
+
+        body{
+          font-family: Arial;
+          background:#f4f4f4;
+          padding:40px;
+          margin:0;
+        }
+
+        .container{
+          max-width:900px;
+          margin:auto;
+        }
+
+        h1{
+          text-align:center;
+          margin-bottom:30px;
+        }
+
+        .card{
+          background:white;
+          padding:20px;
+          margin-bottom:20px;
+          border-radius:10px;
+          box-shadow:0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .card h2{
+          margin-top:0;
+          color:#2c3e50;
+        }
+
+        .voltar{
+          display:inline-block;
+          margin-top:20px;
+          padding:12px 20px;
+          background:#2c3e50;
+          color:white;
+          text-decoration:none;
+          border-radius:8px;
+        }
+
+      </style>
+
+    </head>
+
+    <body>
+
+      <div class="container">
+
+        <h1>Voluntários cadastrados</h1>
+
+        ${lista}
+
+        <a href="/admin" class="voltar">
+          ⬅ Voltar
+        </a>
+
+      </div>
+
+    </body>
+
+    </html>
+
+    `);
+
+  });
 
 });
-
-res.send(`
-<h1>Voluntários cadastrados</h1>
-
-${lista}
-
-<br>
-
-<a href="/admin">Voltar</a>
-`);
-
-});
-
-}); // 🔴 FECHA O app.get corretamente
 
 // ================= ADMIN =================
 
 app.get('/admin', (req, res) => {
 
-if (!req.session.logado) {
-return res.redirect('/login');
-}
+  if (!req.session.logado) {
+    return res.redirect('/login');
+  }
 
-res.send(`
-<h1>Painel Admin</h1>
+  res.send(`
 
-<br>
+  <html>
 
-<a href="/admin-voluntarios">
-Ver voluntários
-</a>
+  <head>
+    <title>Admin</title>
+  </head>
 
-<br><br>
+  <body style="font-family:Arial;padding:30px;">
 
-<a href="/logout">
-Sair
-</a>
-`);
+    <h1>Painel Admin</h1>
+
+    <br>
+
+    <a href="/admin-voluntarios">
+      Ver voluntários
+    </a>
+
+    <br><br>
+
+    <a href="/logout">
+      Sair
+    </a>
+
+  </body>
+
+  </html>
+
+  `);
 
 });
