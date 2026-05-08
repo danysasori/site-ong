@@ -139,29 +139,49 @@ app.get('/admin-voluntarios', (req, res) => {
         padding:15px;
         margin-bottom:10px;
         border-radius:8px;
+        box-shadow:0 0 5px rgba(0,0,0,0.1);
       ">
-      <b>${v.nome}</b><br>
-      Email: ${v.email}<br>
-      Telefone: ${v.telefone}<br>
-      Mensagem: ${v.mensagem}<br>
-      Data: ${v.data}
+        <b>${v.nome}</b><br><br>
+
+        <b>Email:</b> ${v.email}<br>
+        <b>Telefone:</b> ${v.telefone}<br>
+        <b>Mensagem:</b> ${v.mensagem}<br>
+        <b>Data:</b> ${v.data}
       </div>
       `;
     });
 
     res.send(`
-    <h1>Voluntários cadastrados</h1>
+    <html>
 
-    ${lista}
+    <head>
+      <title>Voluntários</title>
+    </head>
 
-    <br>
+    <body style="
+      font-family:Arial;
+      background:#f4f4f4;
+      padding:30px;
+    ">
 
-    <a href="/admin">⬅ Voltar</a>
+      <h1>Voluntários cadastrados</h1>
+
+      ${lista}
+
+      <br>
+
+      <a href="/admin">
+        ⬅ Voltar
+      </a>
+
+    </body>
+
+    </html>
     `);
 
   });
 
-}); // ✅ FECHADO CORRETAMENTE
+});
 
 // ================= ADMIN =================
 
@@ -172,27 +192,34 @@ app.get('/admin', (req, res) => {
   }
 
   res.send(`
-  <h1>Painel Admin</h1>
+  <html>
 
-  <br>
+  <head>
+    <title>Admin</title>
+  </head>
 
-  <a href="/admin-voluntarios">
-  Ver voluntários
-  </a>
+  <body style="
+    font-family:Arial;
+    padding:30px;
+  ">
 
-  <br><br>
+    <h1>Painel Admin</h1>
 
-  <a href="/logout">
-  Sair
-  </a>
+    <br>
+
+    <a href="/admin-voluntarios">
+      Ver voluntários
+    </a>
+
+    <br><br>
+
+    <a href="/logout">
+      Sair
+    </a>
+
+  </body>
+
+  </html>
   `);
 
-});
-
-// ================= SERVIDOR =================
-
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => {
-console.log(`Servidor rodando na porta ${PORT}`);
 });
