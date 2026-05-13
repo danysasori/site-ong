@@ -1,157 +1,266 @@
-// ================= VER VOLUNTÁRIOS =================
+<!DOCTYPE html>
+<html lang="pt-br">
 
-app.get('/admin-voluntarios', (req, res) => {
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  if (!req.session.logado) {
-    return res.redirect('/login');
-  }
+  <title>Voluntário - ONG Caminho Seguro</title>
 
-  db.all(`SELECT * FROM voluntarios ORDER BY id DESC`, [], (err, rows) => {
+  <style>
 
-    if (err) {
-      return res.send("Erro ao buscar voluntários");
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
     }
 
-    let lista = "";
+    body{
+      font-family:Arial, sans-serif;
+      background:#f4f4f4;
+      color:#333;
+    }
 
-    rows.forEach(v => {
+    /* MENU */
 
-      lista += `
-      <div class="card">
+    header{
+      background:#3b82f6;
+      padding:20px;
+      text-align:center;
+      color:white;
+    }
 
-        <h2>${v.nome}</h2>
+    nav{
+      margin-bottom:15px;
+    }
 
-        <p><b>Email:</b> ${v.email}</p>
+    nav a{
+      color:white;
+      text-decoration:none;
+      margin:0 15px;
+      font-weight:bold;
+    }
 
-        <p><b>Telefone:</b> ${v.telefone}</p>
+    nav a:hover{
+      text-decoration:underline;
+    }
 
-        <p><b>Mensagem:</b> ${v.mensagem}</p>
+    header h1{
+      font-size:48px;
+      margin-bottom:10px;
+    }
 
-        <p><b>Data:</b> ${v.data}</p>
+    header p{
+      font-size:20px;
+    }
 
-      </div>
+    /* HERO */
+
+    .hero{
+      height:450px;
+
+      background:
+      linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+      url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1400');
+
+      background-size:cover;
+      background-position:center;
+
+      display:flex;
+      justify-content:center;
+      align-items:center;
+
+      padding:20px;
+    }
+
+    .hero-box{
+      background:rgba(0,0,0,0.55);
+      padding:40px;
+      border-radius:15px;
+      text-align:center;
+      color:white;
+      width:100%;
+      max-width:700px;
+    }
+
+    .hero-box h2{
+      font-size:48px;
+      color:#3b82f6;
+      margin-bottom:20px;
+    }
+
+    .hero-box p{
+      font-size:22px;
+      margin-bottom:25px;
+    }
+
+    /* FORM */
+
+    .container{
+      max-width:800px;
+      margin:50px auto;
+      background:white;
+      padding:40px;
+      border-radius:15px;
+      box-shadow:0 0 15px rgba(0,0,0,0.1);
+    }
+
+    .container h3{
+      text-align:center;
+      font-size:38px;
+      color:#3b82f6;
+      margin-bottom:30px;
+    }
+
+    input,
+    textarea{
+      width:100%;
+      padding:18px;
+      margin-bottom:20px;
+      border:1px solid #ccc;
+      border-radius:10px;
+      font-size:17px;
+    }
+
+    textarea{
+      height:150px;
+      resize:none;
+    }
+
+    button{
+      width:100%;
+      padding:18px;
+      background:#f59e0b;
+      color:white;
+      border:none;
+      border-radius:10px;
+      font-size:20px;
+      cursor:pointer;
+      transition:0.3s;
+      font-weight:bold;
+    }
+
+    button:hover{
+      background:#d97706;
+    }
+
+    .sucesso{
+      background:#d4edda;
+      color:#155724;
+      padding:15px;
+      border-radius:10px;
+      margin-bottom:20px;
+      text-align:center;
+      font-size:18px;
+    }
+
+    footer{
+      background:#3b82f6;
+      color:white;
+      text-align:center;
+      padding:25px;
+      margin-top:50px;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <header>
+
+    <nav>
+      <a href="/">Início</a>
+      <a href="#">Sobre</a>
+      <a href="#">Projetos</a>
+      <a href="#">Doações</a>
+      <a href="/voluntario.html">Voluntário</a>
+      <a href="/contato.html">Contato</a>
+    </nav>
+
+    <h1>ONG Caminho Seguro</h1>
+
+    <p>
+      Ajudando famílias e crianças a terem um lar seguro.
+    </p>
+
+  </header>
+
+  <section class="hero">
+
+    <div class="hero-box">
+
+      <h2>Seja um voluntário</h2>
+
+      <p>
+        Sua ajuda pode transformar vidas e levar esperança
+        para quem mais precisa.
+      </p>
+
+    </div>
+
+  </section>
+
+  <div class="container">
+
+    <h3>Cadastro de Voluntário</h3>
+
+    <div id="msg"></div>
+
+    <form action="/voluntario" method="POST">
+
+      <input
+        type="text"
+        name="nome"
+        placeholder="Seu nome"
+        required
+      >
+
+      <input
+        type="email"
+        name="email"
+        placeholder="Seu email"
+        required
+      >
+
+      <input
+        type="text"
+        name="telefone"
+        placeholder="Seu telefone"
+      >
+
+      <textarea
+        name="mensagem"
+        placeholder="Conte como deseja ajudar"
+      ></textarea>
+
+      <button type="submit">
+        Quero ajudar
+      </button>
+
+    </form>
+
+  </div>
+
+  <footer>
+    © 2026 ONG Caminho Seguro
+  </footer>
+
+  <script>
+
+    const params = new URLSearchParams(window.location.search);
+
+    if(params.get('sucesso')){
+      document.getElementById('msg').innerHTML = `
+        <div class="sucesso">
+          Cadastro enviado com sucesso!
+        </div>
       `;
+    }
 
-    });
+  </script>
 
-    res.send(`
+</body>
 
-    <!DOCTYPE html>
-
-    <html lang="pt-br">
-
-    <head>
-
-      <meta charset="UTF-8">
-
-      <title>Voluntários</title>
-
-      <style>
-
-        body{
-          font-family: Arial;
-          background:#f4f4f4;
-          padding:40px;
-          margin:0;
-        }
-
-        .container{
-          max-width:900px;
-          margin:auto;
-        }
-
-        h1{
-          text-align:center;
-          margin-bottom:30px;
-        }
-
-        .card{
-          background:white;
-          padding:20px;
-          margin-bottom:20px;
-          border-radius:10px;
-          box-shadow:0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .card h2{
-          margin-top:0;
-          color:#2c3e50;
-        }
-
-        .voltar{
-          display:inline-block;
-          margin-top:20px;
-          padding:12px 20px;
-          background:#2c3e50;
-          color:white;
-          text-decoration:none;
-          border-radius:8px;
-        }
-
-      </style>
-
-    </head>
-
-    <body>
-
-      <div class="container">
-
-        <h1>Voluntários cadastrados</h1>
-
-        ${lista}
-
-        <a href="/admin" class="voltar">
-          ⬅ Voltar
-        </a>
-
-      </div>
-
-    </body>
-
-    </html>
-
-    `);
-
-  });
-
-});
-
-// ================= ADMIN =================
-
-app.get('/admin', (req, res) => {
-
-  if (!req.session.logado) {
-    return res.redirect('/login');
-  }
-
-  res.send(`
-
-  <html>
-
-  <head>
-    <title>Admin</title>
-  </head>
-
-  <body style="font-family:Arial;padding:30px;">
-
-    <h1>Painel Admin</h1>
-
-    <br>
-
-    <a href="/admin-voluntarios">
-      Ver voluntários
-    </a>
-
-    <br><br>
-
-    <a href="/logout">
-      Sair
-    </a>
-
-  </body>
-
-  </html>
-
-  `);
-
-});
+</html>
