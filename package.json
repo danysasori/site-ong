@@ -3,21 +3,20 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
+
   "scripts": {
-    "start": "node server.js",
-    "postinstall": "npm install sqlite3@5.1.6"
+    "start": "node server.js"
   },
+
   "keywords": [],
   "author": "",
   "license": "ISC",
+
   "type": "commonjs",
+
   "dependencies": {
     "express": "^4.19.2",
     "express-session": "^1.18.0",
-    "sqlite3": "^5.1.6"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/danysasori/site-ong.git"
+    "sqlite3": "^5.1.7"
   }
 }
